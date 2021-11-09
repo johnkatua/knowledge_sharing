@@ -5,10 +5,8 @@ const getAllCategories = (req, res) => {
     if(err) {
       throw new Error(err)
     }
-    res.status(200).json({
-      status: 'success',
-      data: results.rows
-    })
+    let rows = results.rows
+    return  res.render("categories",{rows})
   })
 };
 
