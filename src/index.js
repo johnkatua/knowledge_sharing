@@ -2,11 +2,14 @@ const express = require('express');
 require("dotenv").config();
 const cors = require('cors');
 const app = express();
-const db = require('./config/db');
+
+const categoriesRoutes = require('./routes/categories');
+
 
 
 app.use(express.json());
 app.use(cors());
+<<<<<<< HEAD
 app.use(express.urlencoded({extended:true}));
 app.set("view engine","ejs");
 app.set("views","src/views/pages");
@@ -22,6 +25,16 @@ app.get("/categories", async (req, res) => {
   return  res.render("categories",{rows})
   console.log(results)
 });
+=======
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.set("views", "src/views/pages");
+app.use("/static", express.static(`${__dirname}/public`));
+
+
+// routes
+app.use(categoriesRoutes)
+>>>>>>> d39a1045b305842961b918c977380943ecb91f37
 
 const port = process.env.PORT  || 9002;
 
