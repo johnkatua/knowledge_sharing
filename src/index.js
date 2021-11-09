@@ -7,18 +7,29 @@ const db = require('./config/db');
 
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.set("views", "src/views/pages");
+app.use("/static", express.static(`${__dirname}/public`));
 
 app.get('/', (req, res) => {
   res.send('Server is working!')
 });
 
-console.log(process.env.PG_HOST);
 
-app.get("/categories", async (req, res) => {
+app.get("/getAllCategories", async (req, res) => {
   let results = await db.query(`SELECT * FROM course_categories`).catch((err) => console.log(err));
-  res.status(200).json({ results });
-  console.log(results)
+  res.status(200).json(results.rows);
 });
+
+app.get("/getAllPapers", async(req, res) => {
+  let results = await db.query(`SELECT * FROM papers`).catch((err) => console.log(err))
+  res.status(200).json(results.rows);
+});
+
+app.get("/getSinglePaper", async(req, res) => {
+
+})
 
 const port = process.env.PORT  || 9000;
 
