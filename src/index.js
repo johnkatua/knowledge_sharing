@@ -2,7 +2,9 @@ const express = require('express');
 require("dotenv").config();
 const cors = require('cors');
 const app = express();
-const db = require('./config/db');
+
+const categoriesRoutes = require('./routes/categories');
+
 
 
 app.use(express.json());
@@ -12,24 +14,9 @@ app.set("view engine", "ejs");
 app.set("views", "src/views/pages");
 app.use("/static", express.static(`${__dirname}/public`));
 
-app.get('/', (req, res) => {
-  res.send('Server is working!')
-});
 
-
-app.get("/getAllCategories", async (req, res) => {
-  let results = await db.query(`SELECT * FROM course_categories`).catch((err) => console.log(err));
-  res.status(200).json(results.rows);
-});
-
-app.get("/getAllPapers", async(req, res) => {
-  let results = await db.query(`SELECT * FROM papers`).catch((err) => console.log(err))
-  res.status(200).json(results.rows);
-});
-
-app.get("/getSinglePaper", async(req, res) => {
-
-})
+// routes
+app.use(categoriesRoutes)
 
 const port = process.env.PORT  || 9000;
 
