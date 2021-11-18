@@ -1,41 +1,46 @@
 const db = require("../config/db");
 
 const getAllPapers = (req, res) => {
-  db.query("SELECT * FROM papers", (err, results) => {
+
+  let category_id = req.query.category_id
+  if(category_id == undefined){
+    category_id = 1
+  }
+
+  db.query(`SELECT * FROM papers WHERE category_id = ${category_id}`, (err, results) => {
     if (err) {
       throw new Error(err);
     }
+    let papers = results.rows
+    /*
     res.status(200).json({
       status: "success",
       data: results.rows,
     });
+    */
+    return  res.render("papers", {papers:papers});
   });
 };
 
-const getPapersByCategoryId = (req, res) => {
-  const reqId = req.params.category_id;
-  console.log(reqId);
-  db.query("SELECT * FROM papers WHERE category_id = $1", [reqId], (err, results) => {
-    if (err) {
-      throw new Error(err);
-    }
-    res.status(200).json({
-      status: "success",
-      data: results.rows,
-    });
-  });
-};
+const getSinglePaper = (req, res) => {
+  let reqId = req.query.paper_id;
+  if(reqId == undefined){
+    reqId = 1
+  }
 
-const getPapersByPaperId = (req, res) => {
-  const reqId = req.params.paper_id;
-  db.query("SELECT * FROM papers WHERE paper_id = $1", [reqId], (err, results) => {
+  db.query(`SELECT papers.paper_name, papers.paper_details, papers.photo_url, course_categories.category_name FROM papers LEFT JOIN course_categories ON course_categories.category_id = papers.category_id WHERE papers.paper_id = ${reqId}`, (err, results) => {
     if (err) {
       throw new Error(err);
     }
+    let paper = results.rows
+  /*
     res.status(200).json({
       status: "success",
       data: results.rows,
     });
+        */
+    return  res.render("paperDetails", {paper:paper});
+   
   });
 };
 
@@ -84,8 +89,7 @@ const deletePaper = (req, res) => {
 
 module.exports = {
   getAllPapers,
-  getPapersByCategoryId,
-  getPapersByPaperId,
+  getSinglePaper,
   createPaper,
   updatePaper,
   deletePaper

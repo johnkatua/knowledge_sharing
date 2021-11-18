@@ -4,14 +4,14 @@ const cors = require('cors');
 const app = express();
 const categoriesRoutes = require("./routes/categories");
 const paperRoutes = require('./routes/paper');
+const { getAllCategories } = require('./controllers/categories');
 
 
 app.use(express.json());
 app.use(cors());
 
-
 app.get('/', (req, res) => {
-  res.send('Server is working!')
+  getAllCategories(req,res);
 });
 
 app.use(express.urlencoded({ extended: true }));
