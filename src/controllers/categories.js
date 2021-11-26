@@ -1,8 +1,16 @@
 const db = require('../config/db');
 
 const getAllCategories = (req, res) => {
+  let studentyear = req.query.studentyear;
+  let papertype = req.query.papertype;
+  let search = req.query.search;
+  let paperyear = req.query.paperyear;
+  let page = req.query.page;
+  if(page == null || page == undefined || page < 1){
+    page = 1;
+  }
 
-  db.query('SELECT * FROM course_categories', (err, results) => {
+  db.query(`SELECT * FROM course_categories ORDER BY category_id LIMIT 6 OFFSET (${page}-1)*6`, (err, results) => {
     
     if(err) {
       throw new Error(err)
@@ -16,7 +24,7 @@ const getAllCategories = (req, res) => {
     })
        */
    
-    return  res.render("categories", {rows:rows});
+    return  res.render("categories", {rows:rows,studentyear:studentyear,papertype:papertype,search:search,paperyear:paperyear,page:page});
   })
 };
 

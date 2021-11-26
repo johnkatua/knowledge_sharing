@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href='/'>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Upload</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Contact</a>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Student Year
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('studentyear').value=1;">First Year</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('studentyear').value=2;">Second Year</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('studentyear').value=3;">Third Year</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('studentyear').value=4;">Fourth Year</p>
+              </li>
+            </ul>
+          </div>
+        <li>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Paper Type
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('papertype').value='Main Exam';">Main Exam</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('papertype').value='CAT';">CAT</p>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Paper Year
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('paperyear').value='2021';">2021</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('paperyear').value='2020';">2020</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('paperyear').value='2019';">2019</p>
+              </li>
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('paperyear').value='2018';">2018</p>
+              </li>      
+              <li>
+                <p class="dropdown-item" onclick="document.getElementById('paperyear').value='2017';">2017</p>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <input class="form-control me-2" name="search" type="search" placeholder="Search" value=<%=search%>>
+        <button onclick="document.getElementById('page').value=1;" class="btn btn-outline-success" type="submit">Search</button>
+    </div>
+  </div>
+</nav>
+<input style="visibility:hidden;" id="studentyear" type="textbox" name="studentyear" value=<%=studentyear%>>
+<input style="visibility:hidden;" id="papertype" type="textbox" name="papertype" value=<%=papertype%>>
+<input style="visibility:hidden;" id="paperyear" type="textbox" name="paperyear" value=<%=paperyear%>>
