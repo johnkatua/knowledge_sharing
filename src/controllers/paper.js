@@ -34,10 +34,11 @@ const getAllPapers = (req, res) => {
     page = 1;
   }
   
-  dbquery = `SELECT papers.paper_id, papers.paper_name, papers.paper_details, papers.photo_url, course_categories.category_name FROM papers LEFT JOIN course_categories ON course_categories.category_id = papers.category_id WHERE papers.category_id=${category_id} AND papers.paper_type LIKE '%${papertype}%' AND CAST(papers.student_year AS TEXT AND CAST(papers.paper_year AS TEXT) LIKE '%${paperyear}%') LIKE '%${studentyear}%' ORDER BY papers.paper_id LIMIT 4 OFFSET (${page}-1)*4`;
+  dbquery = `SELECT papers.paper_id,papers.paper_url, papers.paper_name, papers.paper_details, papers.photo_url, course_categories.category_name FROM papers LEFT JOIN course_categories ON course_categories.category_id = papers.category_id WHERE papers.category_id=${category_id} AND papers.paper_type LIKE '%${papertype}%' AND CAST(papers.student_year AS TEXT) LIKE '%${studentyear}%' AND CAST(papers.paper_year AS TEXT) LIKE '%${paperyear}%' ORDER BY papers.paper_id LIMIT 6 OFFSET (${page}-1)*6`;
   
   let search = req.query.search;
-  if(search != '' || search != undefined ){
+  
+  if(Object.keys(search).length > 0){
     dbquery = `SELECT * FROM papers WHERE CONCAT(papers.paper_name,' ',papers.paper_details) LIKE '%${search}%' AND (papers.paper_type LIKE '%${papertype}%' AND CAST(papers.student_year AS TEXT) LIKE '%${studentyear}%' AND CAST(papers.paper_year AS TEXT) LIKE '%${paperyear}%') ORDER BY papers.paper_id LIMIT 6 OFFSET (${page}-1)*6`;
   }
 
@@ -52,6 +53,7 @@ const getAllPapers = (req, res) => {
       data: results.rows,
     });
     */
+   console.log(papers);
     return  res.render("papers", {papers:papers,studentyear:studentyear,papertype:papertype,search:search,page:page,paperyear:paperyear});
   });
 };
@@ -61,11 +63,12 @@ const getSinglePaper = (req, res) => {
   let papertype = req.query.papertype;
   let reqId = req.query.paper_id;
   let search = req.query.search;
+  let paperyear = req.query.paperyear;
 
   if(reqId == undefined){
     reqId = 1
   }
-  db.query(`SELECT papers.paper_name, papers.paper_details, papers.photo_url, course_categories.category_name FROM papers LEFT JOIN course_categories ON course_categories.category_id = papers.category_id WHERE papers.paper_id = ${reqId}`, (err, results) => {
+  db.query(`SELECT papers.paper_url, papers.paper_name, papers.paper_details, papers.photo_url, course_categories.category_name FROM papers LEFT JOIN course_categories ON course_categories.category_id = papers.category_id WHERE papers.paper_id = ${reqId}`, (err, results) => {
     if (err) {
       throw new Error(err);
     }
@@ -76,7 +79,7 @@ const getSinglePaper = (req, res) => {
       data: results.rows,
     });
         */
-    return  res.render("paperDetails", {paper:paper,studentyear:studentyear,papertype:papertype,search:search});
+    return  res.render("paperDetails", {paper:paper,studentyear:studentyear,papertype:papertype,search:search,paperyear:paperyear});
   });
 };
 
