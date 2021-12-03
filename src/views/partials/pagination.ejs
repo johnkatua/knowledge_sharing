@@ -1,5 +1,6 @@
 <input style="visibility: hidden;" id="page" name="page" value=<%=page %>> </input>
-<button type="submit"
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+  <button type="submit"
   onclick="var count = parseInt(document.getElementById('page').value);document.getElementById('page').value = count-1;"
   type="submit" class="btn btn-primary">
   < Prev</button>
@@ -7,3 +8,4 @@
         onclick="var count = parseInt(document.getElementById('page').value); document.getElementById('page').value = count+1;"
         type="submit" class="btn btn-primary"> Next ></button>
     </div>
+</div>
